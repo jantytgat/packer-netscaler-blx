@@ -1,0 +1,35 @@
+#cloud-config
+autoinstall:
+  version: 1
+  locale: en_US
+  keyboard:
+    layout: "us"
+    variant: "intl"
+  drivers:
+    install: false
+  source:
+    id: ubuntu-server-minimal
+    search_drivers: false
+  updates: security
+  kernel:
+    package: linux-generic
+  storage:
+    layout:
+      name: direct
+  identity:
+    hostname: packer-ubuntu-blx-22-04-proxmox
+    username: ${provisioner_username}
+    password: ${provisioner_password}
+  ssh:
+    install-server: yes
+    allow-pw: no
+    authorized-keys:
+      - ${provisioner_sshkey}
+  packages:
+    - git
+    - qemu-guest-agent
+  late-commands:
+      - echo 'Defaults:stager !requiretty' > /target/etc/sudoers.d/stager
+      - echo 'stager ALL=(ALL) NOPASSWD:ALL' >> /target/etc/sudoers.d/stager
+      - chmod 440 /target/etc/sudoers.d/stager
+      
