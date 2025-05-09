@@ -13,6 +13,11 @@ cd /var/blx_install
 tar zxvf *tar.gz
 apt-get install -y /var/blx_install/blx-deb-${BLX_VERSION}-${BLX_BUILD}/*.deb
 
+mkdir -p /root/.post-blx
+echo "HOST_DNS_NAMESERVER=$(/usr/bin/resolvectl status | grep "DNS Servers: " | sed -e 's/.*DNS Servers: //')" >> /root/.post-blx/environ
+cp /tmp/templates/post-blx.service /usr/lib/systemd/system/.
+systemctl enable post-blx.service
+
 echo "########################################################################"
 echo "NETSCALER BLX INSTALLATION - COMPLETED"
 echo "########################################################################"

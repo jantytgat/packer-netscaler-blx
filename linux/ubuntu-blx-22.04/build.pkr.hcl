@@ -1,3 +1,13 @@
+packer {
+  required_plugins {
+    name = {
+      version = "~> 1"
+      source  = "github.com/hashicorp/proxmox"
+    }
+  }
+}
+
+
 build {
     name = "proxmox-ubuntu-blx-22-04"
     
@@ -6,6 +16,11 @@ build {
     provisioner "file" {
         source = "../general/scripts"
         destination = "/tmp/scripts"
+    }
+
+    provisioner "file" {
+        source = "../general/templates"
+        destination = "/tmp/templates"
     }
 
     provisioner "shell" {
