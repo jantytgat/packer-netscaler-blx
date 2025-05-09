@@ -107,7 +107,7 @@ variable "proxmox_vm_os_type" {
 
 variable "proxmox_vm_cpu_type" {
     type = string
-    default = "x86-64-2-AES"
+    default = "x86-64-v2-AES"
     description = "Virtual machine processor type"
     sensitive = false
 }
@@ -202,17 +202,9 @@ variable "ssh_provisioner" {
     sensitive = true
 }
 
-variable "blx" {
-    type = object({
-        base_url = string
-        version = string
-        build = string
-    })
-}
-
 variable "template_script_repository_url" {
     type = string
-    default = "https://github.com/corelayer/iac-scripts"
+    default = "https://github.com/jantytgat/iac-scripts"
     description = "URL of the Git-repository containing all template scripts to configure the image"
     sensitive = false
 }
@@ -222,4 +214,12 @@ variable "template_script_repository_name" {
     default = "iac-scripts"
     description = "Name of the Git-repository containing all template scripts to configure the image"
     sensitive = false
+}
+
+variable "blx_install" {
+    type = object({
+        base_url = string
+        version = string
+        build = string
+    })
 }

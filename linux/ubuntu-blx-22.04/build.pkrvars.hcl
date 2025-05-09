@@ -36,7 +36,7 @@ ssh_provisioner = {
     sshkey = "{{ op://Private/SSH Key - Jan/public key }}"
 }
 
-blx = {
+blx_install = {
     base_url = "https://downloads.corelayer.eu/citrix/netscaler"
     version = "14.1"
     build = "43.50"

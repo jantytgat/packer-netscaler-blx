@@ -18,29 +18,18 @@ build {
         destination = "/tmp/scripts"
     }
 
-    provisioner "file" {
-        source = "../general/templates"
-        destination = "/tmp/templates"
-    }
-
     provisioner "shell" {
         execute_command = "sudo -S -E bash -c '{{ .Vars }} {{ .Path }}'"
         environment_vars = [
             "PROVISIONER_USERNAME=${var.ssh_provisioner.username}",
-            "BLX_BASE_URL=${var.blx.base_url}",
-            "BLX_VERSION=${var.blx.version}",
-            "BLX_BUILD=${var.blx.build}"
         ]
         inline = [
-            "git clone https://github.com/corelayer/iac-scripts /tmp/iac-scripts",
-            "sh /tmp/scripts/ubuntu-blx-22.04.sh /tmp/iac-scripts/linux",
-            "sh /tmp/scripts/install_blx.sh",
+            "git clone ${var.template_script_repository_url} /root/${var.template_script_repository_name}",
+            "sh /tmp/scripts/ubuntu-blx-22.04.sh /root/${var.template_script_repository_name}/linux",
+            "sh /root/${var.template_script_repository_name}/linux/software/netscaler/blx/apt-install.sh ${var.blx_install.base_url} ${var.blx_install.version} ${var.blx_install.build}",
         ]
     }
 }
-
-
-
 
 source "proxmox-iso" "ubuntu-blx-22-04" {
     # PROXMOX CONNECTION DETAILS
@@ -75,7 +64,7 @@ source "proxmox-iso" "ubuntu-blx-22-04" {
         "c",
         "linux /casper/vmlinuz --- autoinstall ds='nocloud-net;s=http://{{.HTTPIP}}:{{.HTTPPort}}/' <enter>",
         "initrd /casper/<wait2s>initrd<enter>",
-        "boot<wait2s><enter>"
+        "boot<wait><enter>"
     ]
 
     # VM CONFIGURATION

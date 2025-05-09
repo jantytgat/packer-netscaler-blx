@@ -10,9 +10,9 @@ sleep 2s
 
 echo "### Update system"
 echo "------------------------------------------------------------------------"
-sh $SCRIPT_PATH/os/distro/deb-based/generic/apt/apt-update.sh
-sh $SCRIPT_PATH/os/distro/deb-based/generic/apt/apt-configure.sh
-sh $SCRIPT_PATH/os/distro/deb-based/generic/apt/apt-upgrade.sh
+sh $SCRIPT_PATH/os/distro/debian-based/generic/apt/apt-update.sh
+sh $SCRIPT_PATH/os/distro/debian-based/generic/apt/apt-configure.sh
+sh $SCRIPT_PATH/os/distro/debian-based/generic/apt/apt-upgrade.sh
 echo "########################################################################"
 echo ""
 echo ""
@@ -81,8 +81,8 @@ echo "------------------------------------------------------------------------"
 sh $SCRIPT_PATH/os/generic/crontab/cleanup-user.sh root
 sh $SCRIPT_PATH/os/generic/crontab/cleanup-user.sh $PROVISIONER_USERNAME
 sh $SCRIPT_PATH/os/generic/cloud-init/cleanup.sh
-sh $SCRIPT_PATH/os/distro/deb-based/generic/apt/apt-autoremove.sh
-sh $SCRIPT_PATH/os/distro/deb-based/generic/apt/apt-autoclean.sh
+sh $SCRIPT_PATH/os/distro/debian-based/generic/apt/apt-autoremove.sh
+sh $SCRIPT_PATH/os/distro/debian-based/generic/apt/apt-autoclean.sh
 echo "########################################################################"
 echo ""
 echo ""
