@@ -107,7 +107,7 @@ variable "proxmox_vm_os_type" {
 
 variable "proxmox_vm_cpu_type" {
     type = string
-    default = "kvm64"
+    default = "x86-64-2-AES"
     description = "Virtual machine processor type"
     sensitive = false
 }
