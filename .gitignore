@@ -12,3 +12,5 @@ build.auto.*.data
 
 # Generate variable contents
 *.auto.pkrvars.hcl
+
+*.log
