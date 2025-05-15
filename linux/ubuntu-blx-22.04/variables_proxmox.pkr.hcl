@@ -1,9 +1,25 @@
+# Configure Packer HTTP Server for serving cloud-init data
+variable "packer_http" {
+    type = object({
+        ipaddress = string
+        port_min = number
+        port_max = number
+    })
+    default = {
+        ipaddress = null
+        port_min = 40100
+        port_max = 40199
+    }
+}
+
+# Proxmox URL, http(s)://<fqdn>|<ip>
 variable "proxmox_url" {
     type = string
     description = "URL or IP Address of the Proxmox API, without a HTTP PATH"
     sensitive = false
 }
 
+# Proxmox API port
 variable "proxmox_port" {
     type = number
     default = 8006
@@ -11,6 +27,7 @@ variable "proxmox_port" {
     sensitive = false
 }
 
+# Check certificate validaty of the Proxmox API
 variable "proxmox_skip_certificate_validation" {
     type = bool
     default = false
@@ -18,6 +35,7 @@ variable "proxmox_skip_certificate_validation" {
     sensitive = false
 }
 
+# Proxmox provisioning user name
 variable "proxmox_username" {
     type = string
     default = "root@pam"
@@ -25,18 +43,21 @@ variable "proxmox_username" {
     sensitive = true
 }
 
+# Proxmox provisioning user password
 variable "proxmox_password" {
     type = string
     description = "Proxmox API Password"
     sensitive = true
 }
 
+# Name of the Proxmox node in the cluster to run the provisioning process
 variable "proxmox_node" {
     type = string
     description = "Proxmox Node Name that will run the build"
     sensitive = false
 }
 
+# Storage name for the ISO file
 variable "proxmox_iso_storage_name" {
     type = string
     default = "local"
@@ -44,31 +65,27 @@ variable "proxmox_iso_storage_name" {
     sensitive = false
 }
 
+# Name of the ISO file
 variable "proxmox_iso_filename" {
     type = string
     description = "Filename of the ISO-file"
     sensitive = false
 }
 
+# Checksum for the ISO file
 variable "proxmox_iso_checksum" {
     type = string
     description = "Checksum for the ISO file"
     sensitive = false
 }
 
+# Unmount the ISO file when building is complete
 variable "proxmox_unmount_iso" {
     type = bool
     default = true
     description = "Unmount the ISO-file when building is complete"
     sensitive = false
 }
-
-// variable "proxmox_template_name" {
-//     type = string
-//     default = "template_ubuntu_22_04"
-//     description = "Template name when Packer has completed the build process"
-//     sensitive = false
-// }
 
 variable "proxmox_vm_name" {
     type = string
@@ -79,7 +96,7 @@ variable "proxmox_vm_name" {
 
 variable "proxmox_vm_id" {
     type = number
-    default = 999999001
+    default = 899999001
     description = "Virtual machine ID"
 }
 
@@ -151,7 +168,7 @@ variable "proxmox_vm_vga" {
     }
 }
 
-variable "proxmox_vm_network_adapters" {
+variable "proxmox_vm_network_adapter1" {
     type = object({
         model = string
         bridge = string
@@ -160,6 +177,19 @@ variable "proxmox_vm_network_adapters" {
     default = {
             model = "virtio"
             bridge = ""
+            vlan_tag = null
+    }
+}
+
+variable "proxmox_vm_network_adapter2" {
+    type = object({
+        model = string
+        bridge = string
+        vlan_tag = number
+    })
+    default = {
+            model = "virtio"
+            bridge = "vmbr0"
             vlan_tag = null
     }
 }

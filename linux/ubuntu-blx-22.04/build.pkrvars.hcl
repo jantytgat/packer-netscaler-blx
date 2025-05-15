@@ -9,13 +9,10 @@ proxmox_iso_filename = "ubuntu-22.04.5-live-server-amd64.iso"
 proxmox_iso_checksum = "sha256:9bc6028870aef3f74f4e16b900008179e78b130e6b0b9a140635434a46aa98b0"
 
 
-// proxmox_template_name = "template_ubuntu_22_04"
 proxmox_vm_name = "packer-ubuntu-blx-22-04"
-
 proxmox_vm_storage_name = "local"
 
-
-proxmox_vm_network_adapters = {
+proxmox_vm_network_adapter1 = {
     model = "virtio"
     bridge = "vmbr0"
     vlan_tag = null

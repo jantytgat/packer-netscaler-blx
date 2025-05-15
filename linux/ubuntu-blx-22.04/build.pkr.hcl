@@ -54,6 +54,9 @@ source "proxmox-iso" "ubuntu-blx-22-04" {
     cloud_init = true
     cloud_init_storage_pool = var.proxmox_vm_storage_name
 
+    http_bind_address = var.packer_http.ipaddress
+    http_port_min = var.packer_http.port_min
+    http_port_max = var.packer_http.port_max
     http_content = {
         "/meta-data" = file("cloud-init/proxmox/meta-data")
         "/user-data" = templatefile("cloud-init/proxmox/user-data", { "provisioner_username" = var.ssh_provisioner.username, "provisioner_password" = bcrypt(var.ssh_provisioner.password, 10), "provisioner_sshkey" = var.ssh_provisioner.sshkey})
@@ -81,9 +84,15 @@ source "proxmox-iso" "ubuntu-blx-22-04" {
     }
 
     network_adapters {
-        model = var.proxmox_vm_network_adapters.model
-        bridge = var.proxmox_vm_network_adapters.bridge
-        vlan_tag = var.proxmox_vm_network_adapters.vlan_tag
+        model = var.proxmox_vm_network_adapter1.model
+        bridge = var.proxmox_vm_network_adapter1.bridge
+        vlan_tag = var.proxmox_vm_network_adapter1.vlan_tag
+    }
+
+    network_adapters {
+        model = var.proxmox_vm_network_adapter2.model
+        bridge = var.proxmox_vm_network_adapter2.bridge
+        vlan_tag = var.proxmox_vm_network_adapter2.vlan_tag
     }
 
     scsi_controller = var.proxmox_vm_scsi_controller
